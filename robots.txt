@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /zakaz.html
+Disallow: /tools/
+Sitemap: https://worldoffood54.ru/sitemap.xml

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Заказ — World of Food</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/styles.css">
+<style>
+  .z-wrap{max-width:860px;margin-inline:auto;padding:24px var(--gutter) 64px}
+  .z-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:18px}
+  .z-head h1{font-size:clamp(2.2rem,1.6rem + 2vw,3rem);color:var(--spruce)}
+  .z-meta{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:15px;margin-bottom:18px}
+  .z-meta b{color:var(--ink)}
+  .z-table{width:100%;border-collapse:collapse;background:var(--paper);border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+  .z-table th,.z-table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle;font-size:14.5px}
+  .z-table th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--milk)}
+  .z-table td.num,.z-table th.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .z-table td:first-child,.z-table th:first-child{width:72px}
+  .z-table img{display:block;width:48px;height:48px;max-width:none;border-radius:10px;object-fit:cover;background:var(--stone)}
+  .z-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px;padding:14px 16px;background:var(--paper);border-radius:16px;border:1px solid var(--line)}
+  .z-total b{font:600 2rem/1 var(--f-head);color:var(--spruce);font-variant-numeric:lining-nums tabular-nums}
+  .z-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .z-actions .btn{padding-inline:20px}
+  @media (max-width:560px){.z-table td:first-child,.z-table th:first-child{width:56px;padding-right:0}.z-table img{width:40px;height:40px}.z-actions .btn{flex:1 1 calc(50% - 5px);padding-inline:10px;font-size:14px}.z-table th,.z-table td{padding:10px 7px;font-size:13.5px}.z-table th{font-size:11px;letter-spacing:.06em}}
+  .z-empty{padding:40px 0;color:var(--muted)}
+  .z-scroll{overflow-x:auto}
+  @media print{.z-actions,.site-header{display:none}.z-table{border:0}}
+</style>
+</head>
+<body class="season-none">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+</svg>
+<header class="site-header"><div class="wrap header-row"><a class="logo" href="index.html"><img class="logo-img" src="img/logo.svg" alt="" width="58" height="58"><span class="logo-text"><span class="logo-mark">World of Food</span><span class="logo-sub">Заказ</span></span></a></div></header>
+<main class="z-wrap" id="z"></main>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script src="data/settings.js"></script>
+<script src="data/menu.js"></script>
+<script>
+(function(){
+  var S=window.SETTINGS||{},M=window.MENU||{categories:[]},ITEMS={};
+  M.categories.forEach(function(c){c.groups.forEach(function(g){g.cards.forEach(function(card){(card.variants||[card]).forEach(function(v){ITEMS[v.id]=v;});});});});
+  var SETS={};(S.sets||[]).forEach(function(s){SETS[s.id]=s;});
+  var fmt=function(n){return Math.round(n).toLocaleString("ru-RU");};
+  var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
+  var MON=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+  var human=function(s){var p=String(s||"").split("-");return p.length===3?(+p[2])+" "+MON[+p[1]-1]+" "+p[0]:"";};
+  var plural=function(n,f){n=Math.abs(n)%100;var n1=n%10;if(n>10&&n<20)return f[2];if(n1>1&&n1<5)return f[1];if(n1===1)return f[0];return f[2];};
+  var unit=function(it,q){return it.unit==="бокс"?plural(q,["бокс","бокса","боксов"]):it.unit;};
+  var zoneTitle=function(id){var z=(S.zones||[]).filter(function(z){return z.id===id;})[0];return z?z.title:"";};
+  var h=new URLSearchParams(location.hash.slice(1)),lines=[],edit=false;
+  (h.get("o")||"").split(",").filter(Boolean).forEach(function(p){
+    var a=p.split("*"),id=a[0],q=+a[1];
+    if(id.indexOf("set-")===0){var s=SETS[id.slice(4)];if(s)lines.push({set:s,guests:(S.setGuests||[])[q]||"?"});}
+    else if(ITEMS[id]&&q>0)lines.push({it:ITEMS[id],q:q});
+  });
+  var meta={d:h.get("d"),t:h.get("t"),g:h.get("g"),z:h.get("z"),n:h.get("n")};
+  function toast(m){var t=document.getElementById("toast");t.textContent=m;t.hidden=false;setTimeout(function(){t.hidden=true;},2400);}
+  function link(){var parts=lines.map(function(l){return l.set?"set-"+l.set.id+"*"+(S.setGuests||[]).indexOf(l.guests):l.it.id+"*"+l.q;});
+    return (/^https?:$/.test(location.protocol)?location.href.split(/[?#]/)[0].replace(/[^\/]*$/,""):(S.siteUrl||"").replace(/\/$/,"")+"/")+"zakaz.html#o="+encodeURIComponent(parts.join(","))+"&d="+encodeURIComponent(meta.d||"")+"&t="+encodeURIComponent(meta.t||"")+"&g="+encodeURIComponent(meta.g||"")+"&z="+encodeURIComponent(meta.z||"")+"&n="+encodeURIComponent(meta.n||"");}
+  function total(){var s=0,r=0;lines.forEach(function(l){if(l.set||!l.it.price)r++;else s+=l.it.price.from*l.q;});return{s:s,r:r};}
+  function text(){var t=total();return ["Заказ № "+(meta.n||"—")].concat(lines.map(function(l){return l.set?"• "+l.set.title+" — "+l.guests+" гостей — по запросу":"• "+l.it.name+" — "+l.q+" "+unit(l.it,l.q)+" — "+(l.it.price?"от "+fmt(l.it.price.from*l.q)+" ₽":"цена по запросу");}),
+    ["Предварительно: "+(t.s?"от "+fmt(t.s)+" ₽":"—")+(t.r?" + "+t.r+" поз. по запросу":""),"Ссылка: "+link()]).join("\n");}
+  function copy(s,msg){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s).then(function(){toast(msg);},function(){prompt("Скопируйте:",s);});else prompt("Скопируйте:",s);}
+  function render(){
+    var z=document.getElementById("z");
+    if(!lines.length){z.innerHTML='<div class="z-empty"><h1>Заказ не найден</h1><p>Ссылка неполная или заказ пуст. <a href="index.html">Перейти в меню</a></p></div>';return;}
+    var t=total();
+    var rows=lines.map(function(l,i){
+      if(l.set)return '<tr><td><img src="img/sets/'+l.set.img+'.webp" alt=""></td><td>'+esc(l.set.title)+'<br><small>'+esc(l.guests)+' гостей</small></td><td class="num">—</td><td class="num">по запросу</td></tr>';
+      var it=l.it,q=edit?'<span class="mini-stepper" style="display:inline-flex"><button type="button" data-i="'+i+'" data-d="-1">−</button><span>'+l.q+" "+unit(it,l.q)+'</span><button type="button" data-i="'+i+'" data-d="1">+</button></span>':l.q+" "+unit(it,l.q);
+      return '<tr><td>'+(it.img?'<img src="img/menu/'+it.img+'.webp" alt="">':"")+'</td><td>'+esc(it.name)+'</td><td class="num">'+q+'</td><td class="num">'+(it.price?"от "+fmt(it.price.from*l.q)+" ₽":"по запросу")+"</td></tr>";
+    }).join("");
+    z.innerHTML='<div class="z-head"><h1>Заказ № '+esc(meta.n||"—")+'</h1></div>'+
+      '<div class="z-meta">'+(meta.d?'<span>Дата: <b>'+human(meta.d)+(meta.t?", к "+esc(meta.t):"")+'</b></span>':"")+(meta.g?'<span>Гостей: <b>'+esc(meta.g)+"</b></span>":"")+(meta.z?'<span>Доставка: <b>'+esc(zoneTitle(meta.z))+"</b></span>":"")+"</div>"+
+      '<div class="z-scroll"><table class="z-table"><thead><tr><th></th><th>Блюдо</th><th class="num">Кол-во</th><th class="num">Сумма</th></tr></thead><tbody>'+rows+"</tbody></table></div>"+
+      '<div class="z-total"><span>Предварительно'+(t.r?" + "+t.r+" поз. по запросу":"")+'</span><b>'+(t.s?"от "+fmt(t.s)+" ₽":"—")+"</b></div>"+
+      '<div class="z-actions"><button class="btn btn-primary" type="button" id="bEdit">'+(edit?"Готово":"Изменить количество")+'</button><button class="btn btn-ghost-dark" type="button" id="bText">Скопировать текст</button><button class="btn btn-ghost-dark" type="button" id="bLink">Скопировать ссылку</button><button class="btn btn-ghost-dark" type="button" id="bPrint">Распечатать</button></div>';
+    document.getElementById("bEdit").onclick=function(){edit=!edit;if(!edit)history.replaceState(null,"",link().replace(/^.*zakaz\.html/,"zakaz.html"));render();};
+    document.getElementById("bText").onclick=function(){copy(text(),"Текст заказа скопирован");};
+    document.getElementById("bLink").onclick=function(){copy(link(),"Ссылка на заказ скопирована");};
+    document.getElementById("bPrint").onclick=function(){window.print();};
+    Array.prototype.forEach.call(z.querySelectorAll("[data-i]"),function(b){b.onclick=function(){var l=lines[+b.dataset.i],it=l.it,d=+b.dataset.d;
+      l.q=d>0?l.q+it.step:l.q-it.step;if(l.q<it.min){lines.splice(+b.dataset.i,1);}render();};});
+  }
+  render();
+})();
+</script>
+</body>
+</html>
