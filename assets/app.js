@@ -156,19 +156,48 @@
     return el;
   }
 
+  /* ================= Набор на компанию — карточкой в меню ================= */
+  function setsFor(catId) { return (S.sets || []).filter(function (s) { return s.menuCat === catId; }); }
+  function renderSetCard(s) {
+    var guests = S.setGuests || [], chosen = cart.sets[s.id] || guests[1] || guests[0], src = "img/sets/" + s.img + ".webp";
+    var el = document.createElement("article");
+    el.className = "card card-set";
+    el.innerHTML = '<div class="card-media"><img loading="lazy" decoding="async" width="600" height="600" alt="' + esc(s.title) + '" src="' + src + '"><span class="badges"><span class="badge badge-set">Набор</span></span></div>' +
+      '<div class="card-body"><h4 class="card-name">' + esc(s.title) + '</h4><select class="variant-select" aria-label="Сколько гостей: ' + esc(s.title) + '">' +
+      guests.map(function (g) { return '<option value="' + esc(g) + '">' + esc(g) + " гостей</option>"; }).join("") + "</select>" +
+      '<p class="card-compo">' + esc(s.text) + '</p><div class="card-foot"><p class="card-price req">Цена по запросу</p><div class="card-ctrl"></div></div></div>';
+    var sel = $("select", el), ctrl = $(".card-ctrl", el), img = $(".card-media img", el);
+    function upd() {
+      if (cart.sets[s.id]) chosen = cart.sets[s.id];
+      sel.value = chosen;
+      var on = !!cart.sets[s.id];
+      ctrl.innerHTML = '<button class="plus-btn' + (on ? " is-on" : "") + '" type="button" aria-pressed="' + on + '" aria-label="' + (on ? "Убрать из заказа: " : "Добавить в заказ: ") + esc(s.title) + '">' + ICON(on ? "i-check" : "i-plus") + "</button>";
+    }
+    sel.addEventListener("change", function () { chosen = sel.value; if (cart.sets[s.id]) { cart.sets[s.id] = chosen; saveCart(); } });
+    ctrl.addEventListener("click", function (e) {
+      if (!e.target.closest("button")) return;
+      if (cart.sets[s.id]) { delete cart.sets[s.id]; saveCart(); }
+      else { cart.sets[s.id] = chosen; saveCart(); flyToCart(img, src); showAdded({ imgSrc: src, name: s.title }, s.title + " · " + chosen + " гостей"); }
+    });
+    listeners.push(upd); upd();
+    return el;
+  }
+
   /* ================= Меню, вкладки, поиск ================= */
   var activeCat = null;
   function renderMenu() {
     var body = $("#menuBody"), tabs = $("#tabs"); if (!body) return;
     M.categories.forEach(function (cat, ci) {
-      var n = 0; cat.groups.forEach(function (g) { n += g.cards.filter(function (c) { return !c.placeholder; }).length; });
+      var n = setsFor(cat.id).length; cat.groups.forEach(function (g) { n += g.cards.filter(function (c) { return !c.placeholder; }).length; });
       var sec = document.createElement("section");
       sec.className = "cat"; sec.id = "cat-" + cat.id; sec.setAttribute("role", "tabpanel"); sec.setAttribute("aria-labelledby", "tab-" + cat.id);
       sec.innerHTML = '<h3 class="cat-title">' + esc(cat.title) + "<small>" + n + " " + plural(n, ["блюдо", "блюда", "блюд"]) + "</small></h3>";
+      var extra = setsFor(cat.id);
       cat.groups.forEach(function (g) {
         var cards = g.cards.filter(function (c) { return !c.placeholder; }); if (!cards.length) return;
         if (g.title) { var gt = document.createElement("p"); gt.className = "group-title"; gt.textContent = g.title; sec.appendChild(gt); }
         var grid = document.createElement("div"); grid.className = "grid";
+        extra.forEach(function (s) { grid.appendChild(renderSetCard(s)); }); extra = []; // наборы — первыми в категории
         cards.forEach(function (c) { grid.appendChild(renderCard(c)); });
         sec.appendChild(grid);
       });
@@ -206,9 +235,13 @@
           var txt = e.card.name + " " + (e.card.variants ? e.card.variants.map(function (v) { return v.name; }).join(" ") : "") + " " + e.cat.title + " " + (e.group.title || "");
           return q.split(/\s+/).every(function (w) { return norm(txt).indexOf(w) >= 0; });
         });
-        out.innerHTML = '<p class="group-title">Найдено: ' + found.length + "</p>";
-        if (!found.length) out.innerHTML += '<p class="search-empty">Ничего не нашли. Попробуйте другое слово или напишите Ирине — возможно, приготовим на заказ.</p>';
+        var foundSets = (S.sets || []).filter(function (s) {
+          return s.menuCat && q.split(/\s+/).every(function (w) { return norm(s.title + " " + s.text + " набор на компанию").indexOf(w) >= 0; });
+        });
+        out.innerHTML = '<p class="group-title">Найдено: ' + (found.length + foundSets.length) + "</p>";
+        if (!found.length && !foundSets.length) out.innerHTML += '<p class="search-empty">Ничего не нашли. Попробуйте другое слово или напишите Ирине — возможно, приготовим на заказ.</p>';
         var grid = document.createElement("div"); grid.className = "grid";
+        foundSets.forEach(function (s) { grid.appendChild(renderSetCard(s)); });
         found.forEach(function (e) { grid.appendChild(renderCard(e.card)); });
         out.appendChild(grid); out.hidden = false; body.hidden = true;
       }, 160);
@@ -269,6 +302,7 @@
         gBox.appendChild(b);
       });
       function upd() {
+        if (cart.sets[s.id]) chosen = cart.sets[s.id];
         $$("button", gBox).forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.g === chosen ? "true" : "false"); });
         var inCart = !!cart.sets[s.id];
         btn.innerHTML = inCart ? ICON("i-check") + " В заказе — убрать" : ICON("i-plus") + " Добавить к заказу";
@@ -905,7 +939,7 @@
     var n = $("#mnav"); if (!n) return;
     var cats = $("#mnavCats");
     M.categories.forEach(function (cat) {
-      var cnt = 0; cat.groups.forEach(function (g) { cnt += g.cards.filter(function (c) { return !c.placeholder; }).length; });
+      var cnt = setsFor(cat.id).length; cat.groups.forEach(function (g) { cnt += g.cards.filter(function (c) { return !c.placeholder; }).length; });
       var b = document.createElement("button"); b.type = "button"; b.dataset.cat = cat.id;
       b.innerHTML = "<span>" + esc(cat.title) + '</span><span class="n">' + cnt + "</span>";
       b.addEventListener("click", function () {

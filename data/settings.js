@@ -50,16 +50,17 @@ window.SETTINGS = {
     { id: "long", title: "3–4 часа", gFrom: 600, gTo: 800, pFrom: 12, pTo: 15 }
   ],
 
-  // Наборы на компанию: состав и цену Ирина подбирает под число гостей
+  // Наборы на компанию: состав и цену Ирина подбирает под число гостей.
+  // menuCat — продублировать набор карточкой в этой категории меню (hot = «Горячее»)
   sets: [
     { id: "salatov", title: "Набор салатов", img: "nabor-salatov", text: "Несколько салатов в одном боксе — классика и хиты новогоднего стола." },
-    { id: "goryachego", title: "Набор горячего", img: "nabor-goryachego", text: "Рулеты, шашлычки и гарнир — горячее, которое удобно подать на компанию." },
+    { id: "goryachego", title: "Набор горячего", img: "nabor-goryachego", menuCat: "hot", text: "Куриные рулеты в беконе, фаршированные шампиньоны, картофель и другое горячее в одном боксе — удобно подать на компанию." },
     { id: "zakusok", title: "Набор закусок", img: "nabor-zakusok", text: "Канапе, брускетты, тарталетки и профитроли — ассорти для фуршета." }
   ],
   setGuests: ["5–10", "10–20", "20–40", "больше 40"],
 
   // Food box — отдельный блок под меню. id не меняйте (он из прайса). items — что входит в бокс.
-  // photos — фото блюд из папки img/menu (имя файла без .webp); extras — клетки с рисунком, если фото нет
+  // photos — до 4 фото из папки img/menu (имя файла без .webp); extras — клетки с рисунком, если фото не хватает
   boxes: [
     { id: "food-box-1-lyulya-shashlychki-dolki-luk", title: "Food box №1", tagline: "Люля и шашлычки",
       items: ["Люля-кебаб", "Шашлычки из свинины и курицы", "Картофельные дольки", "Маринованный лук", "Салат «Витаминный»", "Соусы"],
@@ -69,7 +70,6 @@ window.SETTINGS = {
       photos: ["shashlychok-iz-tsyplenka-s-tomatami", "mini-shashlychok-iz-svininy", "farshirovannye-shampinony", "vitaminnyy"] },
     { id: "food-box-3-ovoschi-gril", title: "Food box №3", tagline: "Овощи гриль",
       items: ["Шампиньоны", "Кабачок", "Кукуруза", "Картофель", "Болгарский перец", "Соусы"],
-      photos: ["farshirovannye-shampinony", "zapechennye-kartofelnye-dolki"],
-      extras: [{ icon: "corn", label: "Кукуруза" }, { icon: "pepper", label: "Перец и кабачок" }] }
+      photos: ["kukuruza-gril", "ovoschi-gril", "farshirovannye-shampinony", "zapechennye-kartofelnye-dolki"] }
   ]
 };
