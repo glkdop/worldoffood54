@@ -288,6 +288,7 @@
   /* ================= Наборы ================= */
   function renderSets() {
     var grid = $("#setsGrid"); if (!grid) return;
+    grid.dataset.n = (S.sets || []).length; // 4 набора — сетка 4 или 2×2, без «висящей» карточки
     (S.sets || []).forEach(function (s, i) {
       var el = document.createElement("article");
       el.className = "set-card reveal"; el.style.setProperty("--rd", (i * 0.1) + "s");

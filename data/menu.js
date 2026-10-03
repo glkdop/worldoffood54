@@ -1,6 +1,6 @@
 /* Сгенерировано из Прайс_для_сайта.xlsx скриптом tools/build_menu.py — правьте прайс, а не этот файл */
 window.MENU = {
- "generated": "2026-10-02",
+ "generated": "2026-10-03",
  "categories": [
   {
    "id": "salads",
