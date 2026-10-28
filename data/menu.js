@@ -1,6 +1,6 @@
 /* Сгенерировано из Прайс_для_сайта.xlsx скриптом tools/build_menu.py — правьте прайс, а не этот файл */
 window.MENU = {
- "generated": "2026-10-03",
+ "generated": "2026-10-28",
  "categories": [
   {
    "id": "salads",
@@ -14,7 +14,7 @@ window.MENU = {
        "name": "Селёдка под шубой",
        "img": "seledka-pod-shuboy",
        "price": {
-        "from": 880,
+        "from": 1198,
         "to": null,
         "per": null,
         "perCount": null
@@ -31,7 +31,7 @@ window.MENU = {
        "name": "«Лесная поляна» с маринованными опятами",
        "img": "lesnaya-polyana",
        "price": {
-        "from": 880,
+        "from": 1198,
         "to": null,
         "per": null,
         "perCount": null
@@ -48,7 +48,7 @@ window.MENU = {
        "name": "Оливье с говядиной",
        "img": "olive-s-govyadinoy",
        "price": {
-        "from": 880,
+        "from": 1295,
         "to": null,
         "per": null,
         "perCount": null
@@ -65,7 +65,7 @@ window.MENU = {
        "name": "Оливье «Царское» с лососем и красной икрой",
        "img": "olive-s-lososem",
        "price": {
-        "from": 880,
+        "from": 1395,
         "to": null,
         "per": null,
         "perCount": null
@@ -82,7 +82,7 @@ window.MENU = {
        "name": "«Мужской» с говядиной",
        "img": "muzhskoy-s-telyatinoy",
        "price": {
-        "from": 880,
+        "from": 1295,
         "to": null,
         "per": null,
         "perCount": null
@@ -99,7 +99,7 @@ window.MENU = {
        "name": "Оливье с цыплёнком и яблоком",
        "img": "olive-s-tsyplenkom",
        "price": {
-        "from": 880,
+        "from": 1198,
         "to": null,
         "per": null,
         "perCount": null
@@ -116,7 +116,7 @@ window.MENU = {
        "name": "Фунчоза",
        "img": "funchoza",
        "price": {
-        "from": 880,
+        "from": 999,
         "to": null,
         "per": null,
         "perCount": null
@@ -133,7 +133,7 @@ window.MENU = {
        "name": "«Витаминный»",
        "img": "vitaminnyy",
        "price": {
-        "from": 880,
+        "from": 899,
         "to": null,
         "per": null,
         "perCount": null
@@ -150,7 +150,7 @@ window.MENU = {
        "name": "«Мимоза» с горбушей",
        "img": "mimoza-s-gorbushey",
        "price": {
-        "from": 880,
+        "from": 1198,
         "to": null,
         "per": null,
         "perCount": null
@@ -167,7 +167,7 @@ window.MENU = {
        "name": "«Тиффани» с курочкой",
        "img": "tiffani",
        "price": {
-        "from": 880,
+        "from": 1099,
         "to": null,
         "per": null,
         "perCount": null
@@ -184,7 +184,7 @@ window.MENU = {
        "name": "«Гранатовый браслет»",
        "img": "granatovyy-braslet",
        "price": {
-        "from": 880,
+        "from": 1198,
         "to": null,
         "per": null,
         "perCount": null
@@ -201,24 +201,7 @@ window.MENU = {
        "name": "«Ананасовый рай»",
        "img": "ananasovyy-ray",
        "price": {
-        "from": 880,
-        "to": null,
-        "per": null,
-        "perCount": null
-       },
-       "unit": "шт",
-       "min": 1,
-       "step": 1,
-       "unitNote": "600–850 г",
-       "hit": false,
-       "ny": false
-      },
-      {
-       "id": "venetsiya",
-       "name": "«Венеция»",
-       "img": "venetsiya",
-       "price": {
-        "from": 880,
+        "from": 1099,
         "to": null,
         "per": null,
         "perCount": null
@@ -235,7 +218,7 @@ window.MENU = {
        "name": "«Печёночный» из говяжьей печени",
        "img": "pechenochnyy",
        "price": {
-        "from": 880,
+        "from": 1099,
         "to": null,
         "per": null,
         "perCount": null
@@ -252,7 +235,7 @@ window.MENU = {
        "name": "«Греческий»",
        "img": "grecheskiy",
        "price": {
-        "from": 880,
+        "from": 995,
         "to": null,
         "per": null,
         "perCount": null
@@ -269,7 +252,7 @@ window.MENU = {
        "name": "«Цезарь» с цыплёнком",
        "img": "tsezar-s-tsyplenkom",
        "price": {
-        "from": 880,
+        "from": 1099,
         "to": null,
         "per": null,
         "perCount": null
@@ -286,7 +269,7 @@ window.MENU = {
        "name": "«Цезарь» с креветкой",
        "img": "tsezar-s-krevetkami",
        "price": {
-        "from": 880,
+        "from": 1099,
         "to": null,
         "per": null,
         "perCount": null
@@ -303,7 +286,7 @@ window.MENU = {
        "name": "«Нежность» с курицей и черносливом",
        "img": "nezhnost-s-tsyplenkom-i-chernoslivom",
        "price": {
-        "from": 880,
+        "from": 1198,
         "to": null,
         "per": null,
         "perCount": null
@@ -320,7 +303,7 @@ window.MENU = {
        "name": "«Кавказский» с говядиной",
        "img": "kavkazskiy-s-govyadinoy",
        "price": {
-        "from": 880,
+        "from": 1299,
         "to": null,
         "per": null,
         "perCount": null
@@ -337,7 +320,7 @@ window.MENU = {
        "name": "«Министерский» с цыплёнком",
        "img": "ministerskiy-s-tsyplenkom",
        "price": {
-        "from": 880,
+        "from": 1099,
         "to": null,
         "per": null,
         "perCount": null
@@ -354,7 +337,7 @@ window.MENU = {
        "name": "«Изумрудный браслет»",
        "img": "izumrudnyy-braslet",
        "price": {
-        "from": 880,
+        "from": 1099,
         "to": null,
         "per": null,
         "perCount": null
@@ -371,7 +354,7 @@ window.MENU = {
        "name": "«Гнездо глухаря»",
        "img": "gnezdo-gluharya",
        "price": {
-        "from": 880,
+        "from": 1198,
         "to": null,
         "per": null,
         "perCount": null
@@ -717,140 +700,21 @@ window.MENU = {
      "title": "Тарталетки",
      "cards": [
       {
-       "id": "syrnye-tartaletki",
-       "name": "Сырные тарталетки",
+       "id": "boks-syrnyh-tartaletok-6-vidov",
+       "name": "Бокс сырных тарталеток — 6 видов",
        "img": "syrnye-tartaletki",
-       "variants": [
-        {
-         "id": "syrnye-tartaletki-s-syrom-grushey-i-oreh",
-         "name": "Сырные тарталетки с сыром, грушей и орехом",
-         "img": "syrnye-tartaletki",
-         "price": {
-          "from": 3749,
-          "to": null,
-          "per": "box",
-          "perCount": null
-         },
-         "unit": "бокс",
-         "min": 1,
-         "step": 1,
-         "unitNote": "бокс 49 шт",
-         "hit": false,
-         "ny": false,
-         "variant": "с сыром, грушей и орехом"
-        },
-        {
-         "id": "syrnye-tartaletki-s-yaichno-syrnym-musso",
-         "name": "Сырные тарталетки с яично-сырным муссом",
-         "img": "syrnye-tartaletki-s-yaichno-syrnym-mussom",
-         "price": {
-          "from": 3749,
-          "to": null,
-          "per": "box",
-          "perCount": null
-         },
-         "unit": "бокс",
-         "min": 1,
-         "step": 1,
-         "unitNote": "бокс 49 шт",
-         "hit": false,
-         "ny": false,
-         "variant": "с яично-сырным муссом"
-        },
-        {
-         "id": "syrnye-tartaletki-s-krasnoy-ikroy",
-         "name": "Сырные тарталетки с красной икрой",
-         "img": "syrnye-tartaletki-s-krasnoy-ikroy",
-         "price": {
-          "from": 3749,
-          "to": null,
-          "per": "box",
-          "perCount": null
-         },
-         "unit": "бокс",
-         "min": 1,
-         "step": 1,
-         "unitNote": "бокс 49 шт",
-         "hit": false,
-         "ny": false,
-         "variant": "с красной икрой"
-        },
-        {
-         "id": "syrnye-tartaletki-s-lososem",
-         "name": "Сырные тарталетки с лососем",
-         "img": "syrnye-tartaletki-s-lososem",
-         "price": {
-          "from": 3749,
-          "to": null,
-          "per": "box",
-          "perCount": null
-         },
-         "unit": "бокс",
-         "min": 1,
-         "step": 1,
-         "unitNote": "бокс 49 шт",
-         "hit": false,
-         "ny": false,
-         "variant": "с лососем"
-        },
-        {
-         "id": "syrnye-tartaletki-s-chernoy-ikroy",
-         "name": "Сырные тарталетки с чёрной икрой",
-         "img": "syrnye-tartaletki-s-chernoy-ikroy",
-         "price": {
-          "from": 3749,
-          "to": null,
-          "per": "box",
-          "perCount": null
-         },
-         "unit": "бокс",
-         "min": 1,
-         "step": 1,
-         "unitNote": "бокс 49 шт",
-         "hit": false,
-         "ny": false,
-         "variant": "с чёрной икрой"
-        },
-        {
-         "id": "syrnye-tartaletki-s-krevetkoy",
-         "name": "Сырные тарталетки с креветкой",
-         "img": "syrnye-tartaletki-s-krevetkoy",
-         "price": {
-          "from": 3749,
-          "to": null,
-          "per": "box",
-          "perCount": null
-         },
-         "unit": "бокс",
-         "min": 1,
-         "step": 1,
-         "unitNote": "бокс 49 шт",
-         "hit": false,
-         "ny": false,
-         "variant": "с креветкой"
-        },
-        {
-         "id": "syrnye-tartaletki-s-kurinym-pashtetom",
-         "name": "Сырные тарталетки с куриным паштетом",
-         "img": "syrnye-tartaletki-s-kurinym-pashtetom",
-         "price": {
-          "from": 3749,
-          "to": null,
-          "per": "box",
-          "perCount": null
-         },
-         "unit": "бокс",
-         "min": 1,
-         "step": 1,
-         "unitNote": "бокс 49 шт",
-         "hit": false,
-         "ny": false,
-         "variant": "с куриным паштетом"
-        }
-       ],
+       "price": {
+        "from": 3696,
+        "to": null,
+        "per": "box",
+        "perCount": null
+       },
+       "unit": "бокс",
+       "min": 1,
+       "step": 1,
+       "unitNote": "бокс 36 шт",
        "hit": false,
-       "ny": false,
-       "placeholder": false
+       "ny": false
       },
       {
        "id": "tartaletka-s-salatom-iz-lososya",
